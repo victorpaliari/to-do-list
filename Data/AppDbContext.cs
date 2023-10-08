@@ -5,7 +5,7 @@ namespace todolist.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
@@ -15,6 +15,12 @@ namespace todolist.Data
             modelBuilder.Entity<Tarefa>().ToTable("tb_tarefas");
             modelBuilder.Entity<Categoria>().ToTable("tb_categoria");
 
+        //Relacionamento  Tarefa > Categoria
+            modelBuilder.Entity<Tarefa>()
+                 .HasOne(t => t.Categoria)
+                 .WithMany(c => c.Tarefa)
+                 .HasForeignKey("CategoriaId")
+                 .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Tarefa> Tarefas { get; set; } = null!;
@@ -26,11 +32,11 @@ namespace todolist.Data
                 .Where(x => x.State == EntityState.Added)
                 .Select(x => x.Entity);
 
-            foreach (var insertedEntry in insertedEntries) 
-            { 
+            foreach (var insertedEntry in insertedEntries)
+            {
                 if (insertedEntry is Auditable auditableEntity)
                 {
-                    auditableEntity.Data = new DateTimeOffset(DateTime.Now, new TimeSpan(-3,0,0));
+                    auditableEntity.Data = new DateTimeOffset(DateTime.Now, new TimeSpan(-3, 0, 0));
                 }
             }
 

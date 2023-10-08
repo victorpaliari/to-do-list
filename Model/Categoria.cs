@@ -12,6 +12,9 @@ namespace todolist.Model
 
         [Column(TypeName = "varchar")]
         [StringLength(255)]
-        public string Titulo { get; set; } = string.Empty;
-    }
+        public string Nome { get; set; } = string.Empty;
+
+        [InverseProperty("Categoria")]
+        public virtual ICollection<Tarefa>? Tarefa { get; set; }
+}
 }

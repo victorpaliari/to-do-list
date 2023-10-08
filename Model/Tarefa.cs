@@ -21,6 +21,8 @@ namespace todolist.Model
         [StringLength(100)]
         public string Status { get; set; } = string.Empty;
 
+        public virtual Categoria? Categoria { get; set; }
+
 
     }
 }

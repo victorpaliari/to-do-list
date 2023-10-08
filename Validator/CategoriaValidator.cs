@@ -7,7 +7,7 @@ namespace todolist.Validator
     {
         public CategoriaValidator()
         {
-            RuleFor(t => t.Titulo)
+            RuleFor(t => t.Nome)
                 .NotEmpty()
                 .MinimumLength(5)
                 .MaximumLength(100);
