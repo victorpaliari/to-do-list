@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace todolist.Model
 {
@@ -14,7 +14,9 @@ namespace todolist.Model
         [StringLength(255)]
         public string Nome { get; set; } = string.Empty;
 
+        [JsonIgnore]
         [InverseProperty("Categoria")]
         public virtual ICollection<Tarefa>? Tarefa { get; set; }
+        
 }
 }

@@ -15,7 +15,9 @@ namespace todolist.Service.Implements
 
         public async Task<IEnumerable<Tarefa>> GetAll()
         {
-            return await _context.Tarefas.ToListAsync();
+            return await _context.Tarefas
+                .Include(c => c.Categoria)
+                .ToListAsync();
         }
 
         public async Task <Tarefa?> GetById(long id)
