@@ -1,6 +1,9 @@
 
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using todolist.Data;
+using todolist.Model;
+using todolist.Validator;
 
 namespace todolist
 {
@@ -21,6 +24,9 @@ namespace todolist
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString)
             );
+
+            // Validação das Entidades
+            builder.Services.AddTransient<IValidator<Tarefa>, TarefaValidator>();
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
