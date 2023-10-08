@@ -3,6 +3,8 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using todolist.Data;
 using todolist.Model;
+using todolist.Service;
+using todolist.Service.Implements;
 using todolist.Validator;
 
 namespace todolist
@@ -27,7 +29,9 @@ namespace todolist
 
             // Validação das Entidades
             builder.Services.AddTransient<IValidator<Tarefa>, TarefaValidator>();
-
+            
+            // Registrar as Classes e Interfaces Service
+            builder.Services.AddScoped<ITarefaService, TarefaService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
