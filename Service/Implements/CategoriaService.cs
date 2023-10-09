@@ -31,7 +31,7 @@ namespace todolist.Service.Implements
         public async Task<IEnumerable<Categoria>> GetAll()
         {
             return await _context.Categoria
-                // .Include(c => c.Tarefa)
+                 .Include(c => c.Tarefa)
                  .ToListAsync();
         }
 
@@ -40,7 +40,7 @@ namespace todolist.Service.Implements
             try
             {
                 var Categoria = await _context.Categoria
-                    // .Include(c => c.Tarefa)
+                     .Include(c => c.Tarefa)
                      .FirstAsync(t => t.Id == id);
 
                 return Categoria;
@@ -54,8 +54,8 @@ namespace todolist.Service.Implements
         public async Task<IEnumerable<Categoria>> GetByNome(string nome)
         {
             var Categoria = await _context.Categoria
-               // .Include(c => c.Tarefa)
-                .Where(t => t.Nome.Contains(nome))
+                .Include(c => c.Tarefa)
+                .Where(c => c.Nome.Contains(nome))
                 .ToListAsync();
 
             return Categoria;

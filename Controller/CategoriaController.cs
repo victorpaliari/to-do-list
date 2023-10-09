@@ -25,7 +25,8 @@ namespace todolist.Controller
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            return Ok(await _categoriaService.GetAll());
+            return Ok(await _categoriaService
+                .GetAll());
         }
 
         [HttpGet("{id}")]

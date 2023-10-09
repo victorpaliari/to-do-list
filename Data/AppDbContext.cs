@@ -14,17 +14,26 @@ namespace todolist.Data
         {
             modelBuilder.Entity<Tarefa>().ToTable("tb_tarefas");
             modelBuilder.Entity<Categoria>().ToTable("tb_categoria");
+            modelBuilder.Entity<User>().ToTable("tb_usuarios");
 
-        //Relacionamento  Tarefa > Categoria
+            //Relacionamento  Tarefa > Categoria
             modelBuilder.Entity<Tarefa>()
                  .HasOne(t => t.Categoria)
                  .WithMany(c => c.Tarefa)
                  .HasForeignKey("CategoriaId")
                  .OnDelete(DeleteBehavior.Cascade);
+
+            // Relacionamento Tarefa -> User
+            modelBuilder.Entity<Tarefa>()
+                .HasOne(t => t.Usuario)
+                .WithMany(u => u.Tarefa)
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Tarefa> Tarefas { get; set; } = null!;
         public DbSet<Categoria> Categoria { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -23,6 +23,8 @@ namespace todolist.Model
 
         public virtual Categoria? Categoria { get; set; }
 
+        public virtual User? Usuario { get; set; }
+
 
     }
 }

@@ -14,7 +14,6 @@ namespace todolist.Model
         [StringLength(255)]
         public string Nome { get; set; } = string.Empty;
 
-        [JsonIgnore]
         [InverseProperty("Categoria")]
         public virtual ICollection<Tarefa>? Tarefa { get; set; }
         
