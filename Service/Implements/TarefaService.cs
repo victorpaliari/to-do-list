@@ -16,6 +16,7 @@ namespace todolist.Service.Implements
         public async Task<IEnumerable<Tarefa>> GetAll()
         {
             return await _context.Tarefas
+                .Include(t => t.Usuario)
                 .Include(t => t.Categoria)
                 .ToListAsync();
         }
@@ -25,6 +26,7 @@ namespace todolist.Service.Implements
             try
             {
                 var Tarefa = await _context.Tarefas
+                    .Include(t => t.Usuario)
                     .Include(t => t.Categoria)
                     .FirstAsync(t => t.Id == id);
                 return Tarefa;
@@ -38,6 +40,7 @@ namespace todolist.Service.Implements
         public async Task<IEnumerable<Tarefa>> GetStatus(string status)
         {
             var Tarefa = await _context.Tarefas
+                .Include(t => t.Usuario)
                 .Include(t => t.Categoria)
                 .Where(t => t.Status.Contains(status))
                 .ToListAsync();
@@ -48,6 +51,7 @@ namespace todolist.Service.Implements
         public async Task<IEnumerable<Tarefa>> GetTexto(string texto)
         {
             var Tarefa = await _context.Tarefas
+                .Include(t => t.Usuario)
                 .Include(t => t.Categoria)
                 .Where(t => t.Texto.Contains(texto))
                 .ToListAsync();
@@ -58,6 +62,7 @@ namespace todolist.Service.Implements
         public async Task<IEnumerable<Tarefa>> GetUrgencia(string urgencia)
         {
             var Tarefa = await _context.Tarefas
+                .Include(t => t.Usuario)
                 .Include(t => t.Categoria)
                 .Where(t => t.Urgencia.Contains(urgencia))
                 .ToListAsync();
@@ -77,6 +82,8 @@ namespace todolist.Service.Implements
                 tarefa.Categoria = BuscaCategoria;
 
             }
+
+            tarefa.Usuario = tarefa.Usuario is not null ? await _context.Users.FirstOrDefaultAsync(u => u.Id == tarefa.Usuario.Id) : null;
 
             await _context.Tarefas.AddAsync(tarefa);
             await _context.SaveChangesAsync();
@@ -101,6 +108,8 @@ namespace todolist.Service.Implements
                 tarefa.Categoria = BuscaCategoria;
 
             }
+
+            tarefa.Usuario = tarefa.Usuario is not null ? await _context.Users.FirstOrDefaultAsync(u => u.Id == tarefa.Usuario.Id) : null;
 
             _context.Entry(TarefaUpdate).State = EntityState.Detached;
             _context.Entry(tarefa).State = EntityState.Modified;
