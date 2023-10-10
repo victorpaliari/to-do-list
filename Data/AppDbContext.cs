@@ -45,7 +45,7 @@ namespace todolist.Data
             {
                 if (insertedEntry is Auditable auditableEntity)
                 {
-                    auditableEntity.Data = new DateTimeOffset(DateTime.Now, new TimeSpan(-3, 0, 0));
+                    auditableEntity.Data = DateTimeOffset.UtcNow;
                 }
             }
 
