@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using todolist.Model;
 using todolist.Service;
 
 namespace todolist.Controller
 {
+    [Authorize]
     [Route("~/tarefas")]
     [ApiController]
     public class TarefaController : ControllerBase

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using todolist.Model;
+using todolist.Security;
 using todolist.Service;
 
 namespace blogpessoal.Controllers
@@ -14,14 +15,17 @@ namespace blogpessoal.Controllers
 
         private readonly IUserService _userService;
         private readonly IValidator<User> _userValidator;
+        private readonly IAuthService _authService;
 
         public UserController(
             IUserService userService,
-            IValidator<User> userValidator
+            IValidator<User> userValidator,
+            IAuthService authService
             )
         {
             _userService = userService;
             _userValidator = userValidator;
+            _authService = authService;
 
         }
 
@@ -84,5 +88,17 @@ namespace blogpessoal.Controllers
             return Ok(Resposta);
         }
 
+        [AllowAnonymous]
+        [HttpPost("logar")]
+        public async Task<ActionResult> Autenticar([FromBody] UserLogin usuarioLogin)
+        {
+            var Resposta = await _authService.Autenticar(usuarioLogin);
+
+            if (Resposta is null)
+                return Unauthorized("Usuário e/ou Senha inválidos!");
+
+            return Ok(Resposta);
+
+        }
     }
 }
